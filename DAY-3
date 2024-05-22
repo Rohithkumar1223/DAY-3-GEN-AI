@@ -1,0 +1,131 @@
+                                                                                                    DAY -3 
+
+
+1)Create 3 tables named students,department,year
+
+
+mysql> use gen_ai
+Database changed
+mysql> CREATE TABLE department (
+    ->     department_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     department_name VARCHAR(255) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> CREATE TABLE year (
+    ->     year_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     year_name VARCHAR(255) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE students (
+    ->     student_id INT PRIMARY KEY AUTO_INCREMENT,
+    ->     student_name VARCHAR(255) NOT NULL,
+    ->     department_id INT,
+    ->     year_id INT,
+    ->     FOREIGN KEY (department_id) REFERENCES department(department_id),
+    ->     FOREIGN KEY (year_id) REFERENCES year(year_id)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+
+4)store 5 students for each department
+
++--------------+------------------------+
+| student_name | department_name        |
++--------------+------------------------+
+| Diana        | Civil Engineering      |
+| Diana        | Civil Engineering      |
+| George       | Civil Engineering      |
+| Hannah       | Civil Engineering      |
+| Ivy          | Civil Engineering      |
+| Jack         | Civil Engineering      |
+| Alice        | Computer Science       |
+| Alice        | Computer Science       |
+| Eve          | Computer Science       |
+| Mallory      | Computer Science       |
+| Peggy        | Computer Science       |
+| Trent        | Computer Science       |
+| Charlie      | Electrical Engineering |
+| Charlie      | Electrical Engineering |
+| Dave         | Electrical Engineering |
+| Ellen        | Electrical Engineering |
+| Frank        | Electrical Engineering |
+| Zoe          | Electrical Engineering |
+| Bob          | Mechanical Engineering |
+| Bob          | Mechanical Engineering |
+| Victor       | Mechanical Engineering |
+| Walter       | Mechanical Engineering |
+| Xander       | Mechanical Engineering |
+| Yolanda      | Mechanical Engineering |
++--------------+------------------------+
+
+5)write a query to display students from CSE department
+
+mysql> SELECT s.student_name, d.department_name
+    -> FROM students s
+    -> INNER JOIN department d ON s.department_id = d.department_id
+    -> WHERE d.department_name = 'Computer Science';
++--------------+------------------+
+| student_name | department_name  |
++--------------+------------------+
+| Alice        | Computer Science |
+| Alice        | Computer Science |
+| Eve          | Computer Science |
+| Mallory      | Computer Science |
+| Trent        | Computer Science |
+| Peggy        | Computer Science |
++--------------+------------------+
+6 rows in set (0.05 sec)   
+
+6)write a query to display only deptname using student table
+
+mysql> SELECT DISTINCT d.department_name
+    -> FROM students s
+    -> INNER JOIN department d ON s.department_id = d.department_id;
++------------------------+
+| department_name        |
++------------------------+
+| Computer Science       |
+| Mechanical Engineering |
+| Electrical Engineering |
+| Civil Engineering      |
++------------------------+
+4 rows in set (0.02 sec)
+
+7)write a query to display students sorted by dept and firstname
+
+
+mysql> SELECT s.student_name, d.department_name
+    -> FROM students s
+    -> INNER JOIN department d ON s.department_id = d.department_id
+    -> ORDER BY d.department_name, s.student_name;
++--------------+------------------------+
+| student_name | department_name        |
++--------------+------------------------+
+| Diana        | Civil Engineering      |
+| Diana        | Civil Engineering      |
+| George       | Civil Engineering      |
+| Hannah       | Civil Engineering      |
+| Ivy          | Civil Engineering      |
+| Jack         | Civil Engineering      |
+| Alice        | Computer Science       |
+| Alice        | Computer Science       |
+| Eve          | Computer Science       |
+| Mallory      | Computer Science       |
+| Peggy        | Computer Science       |
+| Trent        | Computer Science       |
+| Charlie      | Electrical Engineering |
+| Charlie      | Electrical Engineering |
+| Dave         | Electrical Engineering |
+| Ellen        | Electrical Engineering |
+| Frank        | Electrical Engineering |
+| Zoe          | Electrical Engineering |
+| Bob          | Mechanical Engineering |
+| Bob          | Mechanical Engineering |
+| Victor       | Mechanical Engineering |
+| Walter       | Mechanical Engineering |
+| Xander       | Mechanical Engineering |
+| Yolanda      | Mechanical Engineering |
++--------------+------------------------+
+24 rows in set (0.00 sec)
